@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="success-page"><div class="success-icon">✓</div><span class="eyebrow">SİPARİŞ ALINDI</span><h1>Teşekkürler, {{ customer }}.</h1><p>Demo siparişin başarıyla oluşturuldu. Herhangi bir ödeme alınmadı.</p><div class="success-order"><span>Sipariş numarası</span><b>{{ order_id }}</b><span>Toplam</span><b>₺{{ '{:,.0f}'.format(total).replace(',', '.') }}</b></div><a class="cta" href="/" data-clear-cart>Mağazaya dön →</a></section>
+<script>localStorage.removeItem('velunda-cart-v1');</script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Velunda Mobil{% endblock %}
+{% block content %}
+<section class="mobile-lab" data-mobile-lab data-user="{{ current_user.id if current_user else '' }}">
+  <header class="mobile-intro">
+    <span class="eyebrow">MOBİL UYGULAMA</span>
+    <h1>Velunda cebinde</h1>
+    <p>Soldaki telefon, mağazanın mobil uygulaması gibi çalışır. Ekranlar arasında gezindikçe uygulamanın sunucuya attığı her istek sağda görünür. Bir isteğe tıkla, değiştir ve yeniden gönder.</p>
+  </header>
+
+  <div class="mobile-stage">
+    <div class="device" aria-label="Velunda mobil uygulaması">
+      <div class="device-notch"></div>
+      <div class="app-bar"><span class="brand-mark">V</span><b id="app-title">Keşfet</b></div>
+      <div class="app-view" id="app-view" aria-live="polite"></div>
+      <nav class="app-tabs" aria-label="Uygulama menüsü">
+        <button class="active" data-tab="discover"><span>◎</span>Keşfet</button>
+        <button data-tab="orders"><span>▤</span>Siparişler</button>
+        <button data-tab="assistant"><span>✦</span>Asistan</button>
+        <button data-tab="profile"><span>○</span>Profil</button>
+      </nav>
+    </div>
+
+    <div class="console-window net-panel">
+      <div class="console-head"><span></span><span></span><span></span><b>Ağ trafiği · {{ 'Güvenli mod' if safe else 'Zafiyetli mod' }}</b><button type="button" id="net-clear">Temizle</button></div>
+      <ol class="net-log" id="net-log"></ol>
+      <form class="net-editor" id="net-editor">
+        <div class="net-line">
+          <label class="sr-only" for="net-method">Yöntem</label>
+          <select id="net-method" name="method"><option>GET</option><option>POST</option><option>PATCH</option><option>DELETE</option></select>
+          <label class="sr-only" for="net-path">Adres</label>
+          <input id="net-path" name="path" value="/api/products" autocomplete="off">
+          <button>Gönder</button>
+        </div>
+        <label class="sr-only" for="net-body">İstek gövdesi (JSON)</label>
+        <textarea id="net-body" name="body" placeholder="İstek gövdesi (JSON) — GET için boş bırak"></textarea>
+      </form>
+      <pre class="net-response" id="net-response">Uygulamada gezin; istekler burada listelenecek.</pre>
+    </div>
+  </div>
+</section>
+<script src="{{ url_for('static', filename='mobile.js') }}"></script>
+{% endblock %}

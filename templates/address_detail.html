@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
+{% set account_section = 'addresses' %}
+<section class="account-page"><div class="account-welcome"><div class="large-avatar">{{ current_user.name[0] }}</div><div><span class="eyebrow">VELUNDA HESABIM</span><h1>{{ address.label }} adresi</h1><p>Adres kaydı #{{ address_id }}</p></div><a href="/logout">Çıkış yap</a></div><div class="account-grid">{% include '_account_nav.html' %}<div class="account-content"><section class="account-section compact"><h2>Teslimat bilgileri</h2><dl><dt>Alıcı</dt><dd>{{ address.name }}</dd><dt>Adres</dt><dd>{{ address.line }}</dd><dt>İlçe / İl</dt><dd>{{ address.city }}</dd><dt>Posta kodu</dt><dd>{{ address.postal }}</dd><dt>Kayıt sahibi</dt><dd>{{ address.owner }}</dd></dl><div class="security-hint">{{ 'Güvenli mod sahiplik kontrolünü her istekte uygular.' if safe else 'Zafiyetli mod yalnızca adres kimliğinin varlığını kontrol eder.' }}</div></section></div></div></section>
+{% endblock %}

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Velunda — Designed for everyday{% endblock %}</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="announcement">2.500 TL üzeri ücretsiz kargo · 30 gün kolay iade</div>
+  <header class="site-header">
+    <a class="brand" href="/"><span class="brand-mark">V</span><span>VELUNDA</span></a>
+    <form class="header-search" action="/search" method="get"><label class="sr-only" for="header-q">Ürün ara</label><input id="header-q" name="q" placeholder="Ürün, kategori veya marka ara"><button aria-label="Ara">⌕</button></form>
+    <nav class="header-actions">
+      <a href="/favorites">Favoriler <span>♡</span></a>
+      {% if current_user %}<a class="account-link" href="/account"><span class="account-avatar">{{ current_user.name[0] }}</span><span><small>Merhaba</small>{{ current_user.name.split()[0] }}</span></a>{% else %}<a class="account-link" href="/login"><span class="account-avatar">○</span><span><small>Hesabım</small>Giriş yap</span></a>{% endif %}
+      <a class="cart" href="/cart">Sepet <b data-cart-count>0</b></a>
+    </nav>
+  </header>
+  <nav class="category-nav" aria-label="Ürün kategorileri"><a class="{{ 'active' if category|default('') == 'Tümü' else '' }}" href="/shop">Tüm ürünler</a><a class="{{ 'active' if category|default('') == 'Yeni' else '' }}" href="/shop/yeni">Yeni gelenler</a><a class="{{ 'active' if category|default('') == 'Teknoloji' else '' }}" href="/shop/teknoloji">Teknoloji</a><a class="{{ 'active' if category|default('') == 'Yaşam' else '' }}" href="/shop/yasam">Yaşam</a><a class="{{ 'active' if category|default('') == 'Aksesuar' else '' }}" href="/shop/aksesuar">Aksesuar</a><a class="{{ 'active' if category|default('') == 'Kampanya' else '' }}" href="/shop/kampanyalar">Kampanyalar</a></nav>
+  <main>
+    <div class="lab-bar {{ 'safe' if safe else 'vulnerable' }}"><span><b>Eğitim modu</b> · {{ 'Güvenli kontroller etkin' if safe else 'Zafiyetli senaryo etkin' }}</span><span class="lab-actions"><a href="/lab">Görev panosu</a><a href="/mobile">Mobil uygulama</a><span class="mode-switch"><form action="/lab/mode/vulnerable" method="post"><button class="{{ '' if safe else 'active' }}">Zafiyetli</button></form><form action="/lab/mode/safe" method="post"><button class="{{ 'active' if safe else '' }}">Güvenli</button></form></span></span></div>
+    {% block content %}{% endblock %}
+  </main>
+  <button class="chat-launcher" id="chat-launcher" aria-label="Velunda asistanını aç"><span>✦</span><b>Yardım?</b></button>
+  <aside class="chat-widget" id="chat-widget" aria-label="Velunda alışveriş asistanı" hidden>
+    <div class="chat-head"><div class="chat-identity"><span>✦</span><div><b>Velunda Asistan</b><small><i></i> Çevrimiçi</small></div></div><button id="chat-close" aria-label="Kapat">×</button></div>
+    <div class="chat-messages" id="chat-messages"><div class="chat-message bot-message">Merhaba! Ürün seçimi, teslimat ve iade konularında yardımcı olabilirim.</div><div class="chat-suggestions"><button>Kulaklık öner</button><button>İade koşulları</button></div></div>
+    <form class="chat-form" id="chat-form"><label class="sr-only" for="chat-input">Mesaj</label><input id="chat-input" autocomplete="off" placeholder="Bir şey sorun..."><button aria-label="Gönder">→</button></form>
+  </aside>
+  <footer><div class="footer-grid"><div><div class="brand footer-brand"><span class="brand-mark">V</span><span>VELUNDA</span></div><p>Günlük hayat için daha iyi tasarlanmış ürünler.</p></div><div><b>Alışveriş</b><a href="/shop/yeni">Yeni gelenler</a><a href="/shop/teknoloji">Teknoloji</a><a href="/shop/kampanyalar">Kampanyalar</a></div><div><b>Destek</b><a href="/account">Sipariş takibi</a><a href="/about">Hakkımızda</a><button type="button" data-open-chat>Canlı destek</button></div><div><b>Güvenli alışveriş</b><span>30 gün ücretsiz iade</span><span>2 yıl garanti</span><span>Gerçek ödeme alınmaz</span></div></div><small>ProgrammixV eğitim laboratuvarı · Gerçek kullanıcı verisi içermez.</small></footer>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

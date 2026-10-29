@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Velunda Security Lab{% endblock %}
+{% block content %}
+<section class="lab-dashboard">
+  <header class="lab-hero">
+    <div><span class="eyebrow">PROGRAMMIXV · APPLICATION & AI SECURITY</span><h1>Security Lab</h1><p>Gerçek mağaza akışındaki web, API ve AI zafiyetlerini keşfet. Her görevi önce zafiyetli, ardından güvenli modda çalıştır.</p></div>
+    <div class="lab-score"><strong>{{ challenges|length }}</strong><span>kontrollü görev</span><small>Yalnızca 127.0.0.1</small></div>
+  </header>
+
+  <div class="lab-summary">
+    <div><b>WEB</b><span>Girdi, oturum ve yetkilendirme</span></div>
+    <div><b>API</b><span>JSON, BOLA ve fazla veri</span></div>
+    <div><b>AI</b><span>Prompt ve sistem sınırları</span></div>
+  </div>
+
+  <div class="challenge-toolbar">
+    <div><span class="status-dot"></span><b>{{ 'Güvenli mod' if safe else 'Zafiyetli mod' }}</b></div>
+    <div class="challenge-filters"><button class="active" data-challenge-filter="all">Tümü</button><button data-challenge-filter="WEB">Web</button><button data-challenge-filter="API">API</button><button data-challenge-filter="AI">AI</button></div>
+  </div>
+
+  <div class="challenge-grid">
+    {% for challenge in challenges %}
+    <article class="challenge-card" data-challenge-area="{{ challenge.area }}">
+      <div class="challenge-meta"><span>{{ challenge.area }}</span><small>{{ challenge.difficulty }}</small></div>
+      <h2>{{ challenge.title }}</h2>
+      <p>{{ challenge.summary }}</p>
+      {% if challenge.payload %}<div class="payload"><code>{{ challenge.payload }}</code><button type="button" data-copy-payload="{{ challenge.payload }}">Kopyala</button></div>{% endif %}
+      {% if challenge.api_path %}
+      <div class="api-request"><span>{{ challenge.method }}</span><code>{{ challenge.api_path }}</code></div>
+      {% if challenge.body %}<pre>{{ challenge.body|tojson(indent=2) }}</pre>{% endif %}
+      <button class="challenge-run" type="button" data-api-run data-method="{{ challenge.method }}" data-path="{{ challenge.api_path }}"{% if challenge.body %} data-body='{{ challenge.body|tojson }}'{% endif %}>İsteği çalıştır</button>
+      {% elif challenge.id == 'ai-prompt' %}
+      <button class="challenge-run" type="button" data-open-chat>Chatbotu aç</button>
+      {% else %}
+      <a class="challenge-run" href="{{ challenge.route }}">{{ challenge.route_label }}</a>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </div>
+
+  <section class="api-console">
+    <div><span class="eyebrow">CANLI API KONSOLU</span><h2>Yanıt</h2><p>Kartlardaki API görevlerinden birini çalıştır. HTTP durum kodu ve JSON yanıtı burada görünür.</p></div>
+    <div class="console-window"><div class="console-head"><span></span><span></span><span></span><b id="api-console-status">Hazır</b></div><pre id="api-console-output">Bir API görevi seçin…</pre></div>
+  </section>
+</section>
+{% endblock %}

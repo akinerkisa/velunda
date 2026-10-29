@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-shell"><span class="eyebrow">HESABIM / SİPARİŞLERİM</span><h1>Sipariş #VL-2026-00{{ ticket_id }}</h1><div class="order-layout"><div class="order-card"><div class="order-product"><div class="order-thumb">V</div><div><small>ÜRÜN</small><h2>{{ ticket.title }}</h2><p>{{ ticket.body }}</p></div><strong>{{ ticket.price }}</strong></div><div class="progress"><i></i><i class="active"></i><i></i></div><div class="progress-labels"><span>Sipariş alındı</span><b>{{ ticket.status }}</b><span>Teslim edildi</span></div></div><aside class="account-card"><h3>Hesap bilgisi</h3><dl><dt>Oturumdaki kullanıcı</dt><dd>{{ user }}</dd><dt>Sipariş sahibi</dt><dd>{{ ticket.owner }}</dd></dl><div class="security-hint">Eğitim ipucu: URL'deki sipariş numarasını değiştir.</div></aside></div><a class="back-link" href="/">← Mağazaya dön</a></section>
+{% endblock %}

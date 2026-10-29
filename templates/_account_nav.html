@@ -1,0 +1,7 @@
+<aside class="account-menu" aria-label="Hesap menüsü">
+  <a class="{{ 'active' if account_section == 'orders' else '' }}" href="/account/orders">Siparişlerim</a>
+  <a class="{{ 'active' if account_section == 'profile' else '' }}" href="/account/profile">Profil bilgilerim</a>
+  <a class="{{ 'active' if account_section == 'addresses' else '' }}" href="/account/addresses">Adreslerim</a>
+  <a class="{{ 'active' if account_section == 'security' else '' }}" href="/account/security">Giriş ve güvenlik</a>
+  <a href="/favorites">Favorilerim</a>
+</aside>
